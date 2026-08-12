@@ -25,12 +25,19 @@ Two points make this a firm conclusion rather than an environment artifact:
 Feasibility of the single-agent reach-avoid task as `svgd_iters` is swept from 20 to 200, one strip per fixed `stl_temperature`. Feasibility is judged by the exact STL Boolean (`specification.eval`). Black = feasible, white = infeasible (convention determined by cross-checking temperature 200, the committed default, which is independently infeasible at the committed 20-iteration setting). Temperatures with no feasible iteration are omitted. Detailed band analysis is pending the full sweep.
 
 ![temperature 5](./docs/feasibility_temp_5.0.png)
+
 ![temperature 8](./docs/feasibility_temp_8_0.png)
+
 ![temperature 10](./docs/feasibility_temp_10_0.png)
+
 ![temperature 20](./docs/feasibility_temp_20_0.png)
+
 ![temperature 50](./docs/feasibility_temp_50_0.png)
+
 ![temperature 100](./docs/feasibility_temp_100_0.png)
+
 ![temperature 200](./docs/feasibility_temp_200_0.png)
+
 ![temperature 500](./docs/feasibility_temp_500_0.png)
 
 ---
