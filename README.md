@@ -11,7 +11,7 @@ A clean checkout was installed in an isolated environment with the locked `stlja
 
 | method | reference | CPU | GPU |
 |---|---|---|---|
-| stl_svpio | **+0.108** | −2.471 | −0.399 |
+| stl_svpio | **+0.108** | −2.471 | −2.471 |
 | mppi | **+0.005** | −0.797210 | −0.797210 |
 | dpi | **+0.179** | crashes (see below) | −3.500 |
 
