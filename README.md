@@ -79,4 +79,8 @@ The committed Figure 3 presets do not reproduce the paper's near-total satisfact
 
 > The "after" run covers STL-SVPIO only; the baseline methods were not re-run.
 
+The following graph was constructed from the first run of the codebase without tuning and actually compares between baselines: 
+
+![figure 3 before vs after](./docs/figure3_reproduction.png)
+
 ---
