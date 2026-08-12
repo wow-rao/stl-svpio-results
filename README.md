@@ -109,3 +109,5 @@ The arm bends over and drives the gripper down onto the goal markers. Robustness
 The cheetah rears up off its back but collapses into a heap without carrying the torso through the rotation. Robustness is −2.4824 versus the reference +0.1676 — a large-margin violation, not a boundary miss, and `stl_satisfied` is false. The rollout confirms the number: the backflip is not performed.
 
 **Conclusion.** The nonlinear tasks show the same partial, task-dependent pattern as the rest of the study: `panda_goal_reach` reproduces, while `halfcheetah_backflip` does not under the committed configuration. I did try (albeit a far smaller pool) a few hyperparameters (such as itereations, step size, and samples) but I did not see any improvement. 
+
+**Note** If trying to replicate the experiment on a single GPU workstation, note that the nonlinear task will fail since it has multiple GPU hard-coded, replace the GPU index 1 with 0 and it should work fine.  
