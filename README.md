@@ -91,7 +91,7 @@ Unlike Table I / Figure 3, these are single deterministic long-horizon GPU runs 
 
 | task | reference ρ | run ρ | ref satisfied | run satisfied | outcome |
 |---|---|---|---|---|---|
-| panda_goal_reach | +0.0289 | +0.0310 | true | true | **reproduces (marginal)** |
+| panda_goal_reach | +0.0289 | +0.0310 | true | true | **reproduces** |
 | halfcheetah_backflip | +0.1676 | **−2.4824** | true | **false** | **does not reproduce** |
 
 Runtimes (informational, hardware-dependent): panda 657 s ref / 207 s run; cheetah 593 s ref / 386 s run. The panda run matched the reference robustness almost exactly while running 3.3× faster, which indicates the speedup is hardware/JIT rather than a truncated run — so the cheetah failure is unlikely to be an early-stop artifact.
