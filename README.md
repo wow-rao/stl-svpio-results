@@ -79,7 +79,7 @@ The committed Figure 3 presets do not reproduce the paper's near-total satisfact
 
 > The "after" run covers STL-SVPIO only; the baseline methods were not re-run.
 
-The following graph was constructed from the first run of the codebase without tuning and actually compares between baselines: 
+The following graph was constructed from the first run of the codebase without tuning and actually compares between baselines. The graph clearly shows that though the quantitative results of the paper does not hold from the given configuration, the qualitative result that STL-SVPIO is superior to other methods still hold.  
 
 ![figure 3 before vs after](./docs/figure3_reproduction.png)
 
