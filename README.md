@@ -84,3 +84,28 @@ The following graph was constructed from the first run of the codebase without t
 ![figure 3 before vs after](./docs/figure3_reproduction.png)
 
 ---
+
+## Nonlinear MJX tasks — panda reach & halfcheetah backflip
+
+Unlike Table I / Figure 3, these are single deterministic long-horizon GPU runs (no seed distribution), so each is compared as one robustness scalar plus the satisfied boolean against the committed reference (`results/reference/*_results.json`). Runtime is hardware-dependent and shown for information only.
+
+| task | reference ρ | run ρ | ref satisfied | run satisfied | outcome |
+|---|---|---|---|---|---|
+| panda_goal_reach | +0.0289 | +0.0310 | true | true | **reproduces (marginal)** |
+| halfcheetah_backflip | +0.1676 | **−2.4824** | true | **false** | **does not reproduce** |
+
+Runtimes (informational, hardware-dependent): panda 657 s ref / 207 s run; cheetah 593 s ref / 386 s run. The panda run matched the reference robustness almost exactly while running 3.3× faster, which indicates the speedup is hardware/JIT rather than a truncated run — so the cheetah failure is unlikely to be an early-stop artifact.
+
+### panda_goal_reach — reproduces
+
+![panda reach rollout](./docs/panda_reach_svgd_mppi_brax.gif)
+
+The arm bends over and drives the gripper down onto the goal markers. Robustness is +0.0310 versus the reference +0.0289 — a match within 0.002, both satisfied. Both values sit barely above zero, so the reference itself is a marginally-satisfying plan; the rollout looks tentative because the specification is met by a hair on both sides.
+
+### halfcheetah_backflip — does not reproduce
+
+![halfcheetah backflip rollout](./docs/halfcheetah_svgd_mppi_brax.gif)
+
+The cheetah rears up off its back but collapses into a heap without carrying the torso through the rotation. Robustness is −2.4824 versus the reference +0.1676 — a large-margin violation, not a boundary miss, and `stl_satisfied` is false. The rollout confirms the number: the backflip is not performed.
+
+**Conclusion.** The nonlinear tasks show the same partial, task-dependent pattern as the rest of the study: `panda_goal_reach` reproduces, while `halfcheetah_backflip` does not under the committed configuration. I did try (albeit a far smaller pool) a few hyperparameters (such as itereations, step size, and samples) but I did not see any improvement. 
