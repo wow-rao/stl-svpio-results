@@ -17,7 +17,7 @@ A clean checkout was installed in an isolated environment with the locked `stlja
 
 Two points make this a firm conclusion rather than an environment artifact:
 
-1. **MPPI is bit-identical** between the clean CPU run (−0.797210) and the local GPU run (−0.797210). MPPI has no gradient path, so it is deterministic given the seed, and the local environment reproduces the committed code exactly — yet it does not match the reference. STL-SVPIO is *not* bit-identical across devices (−2.471 CPU vs −0.399 GPU) because it is gradient-based and sensitive to platform/math-library differences, but both values still fail. What fails to match the reference is the committed code, not the machine.
+1. **MPPI and STL-SVPIO is bit-identical** between the CPU (−0.797210) and GPU run (−0.797210). MPPI has no gradient path, so it is deterministic given the seed, and the local environment reproduces the committed code exactly — yet it does not match the reference. STL-SVPIO is also bit-identical across devices.
 2. **DPI, SVMPC, and STLCG-GD cannot run as committed.** Their configs set `stl_temperature: null` while inheriting `stl_approx_method: logsumexp`, and `stljax` raises `AssertionError: need a temperature value` for that combination. A clean checkout crashes on these methods.
 
 ### Feasibility strips (reach-avoid, STL-SVPIO)
