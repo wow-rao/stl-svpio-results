@@ -54,11 +54,6 @@ After setting the `stl_approx_method: "true"`, and running the sweep, from where
 | dpi | -3.500000 | false | 768.426 |
 | stlcg_gradient_descent | -3.498310 | false | 412.975 |
 
-## What is and is not claimed (Table I)
-
-**Supported directly by data:**
-- The committed repo does not regenerate its Table I reference (clean-install run; MPPI bit-identical to local; DPI/SVMPC/STLCG-GD crash on `stl_temperature: null`).
-
 **Hypothesis (labelled, not asserted as fact):**
 - The reference numbers were produced by original/dev code rather than these repackaged entry points.
 
