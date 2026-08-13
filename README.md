@@ -60,11 +60,9 @@ Note that the above robustness values were reported using the smoothed `logsumex
 
 I used Tree-Structured Parzen Estimator (TPE) to run a Bayesian tuning loop over three hyper-parameters (STL temperature, SVGD step size and SVGD final step size) and obtained results better than the ones reported in the paper in the same 20 iterations, see [file](./docs/utils/sweep_stl_svpio_table1.py) for details on the search space and best configuration. 
 
-| Method | Robustness | Satisifed | Runtime (ms) | Robustness in the paper
-|---|---|---|---|---|
-| stl_svpio | 0.265759 | true | 1284.050 | 0.108 |
-
-Note that the above robustness values are the true robustness value, not the smoothed ones. I have not done hyper-parameter tuning for the rest of the methods. 
+| Method | True Robustness | Smoothed Robustness | Satisifed | Runtime (ms) | Robustness in the paper
+|---|---|---|---|---|---|
+| stl_svpio | 0.265759 | 0.202061 | true | 1284.050 | 0.108 |
 
 ---
 
