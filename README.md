@@ -54,6 +54,18 @@ After setting the `stl_approx_method: "true"`, and running the sweep, from where
 | dpi | -3.500000 | false | 768.426 |
 | stlcg_gradient_descent | -3.498310 | false | 412.975 |
 
+Note that the above robustness values were reported using the smoothed `logsumexp` robustness, not the true robustness. 
+
+## Update 1 - TPE based hyper-parameter tuning for STL-SVPIO
+
+I used Tree-Structured Parzen Estimator (TPE) to run a Bayesian tuning loop over three hyper-parameters (STL temperature, SVGD step size and SVGD final step size) and obtained results better than the ones reported in the paper in the same 20 iterations, see [file](./docs/utils/sweep_stl_svpio_table1.py) for details on the search space and best configuration. 
+
+| Method | Robustness | Satisifed | Runtime (ms) | Robustness in the paper
+|---|---|---|---|---|
+| stl_svpio | 0.265759 | true | 1284.050 | 0.108 |
+
+Note that the above robustness values are the true robustness value, not the smoothed ones. I have not done hyper-parameter tuning for the rest of the methods. 
+
 ---
 
 ## Figure 3 — point-mass benchmark (STL-SVPIO, before vs after sweep-tuning)
