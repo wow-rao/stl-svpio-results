@@ -41,7 +41,6 @@ def main() -> None:
         print(f"FEASIBLE stl_temperature found: {winner}  in iterations: {iterations}")
     else:
         print("No feasible temperature in this sweep -- temperature alone is not the fix.")
-        print("Next knobs to try: svgd_step_size, svgd_step_final, svgd_iters, or approx_method.")
 
 
 if __name__ == "__main__":
