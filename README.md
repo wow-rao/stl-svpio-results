@@ -147,3 +147,15 @@ The cheetah rears up off its back but collapses into a heap without carrying the
 **Conclusion.** The nonlinear tasks show the same partial, task-dependent pattern as the rest of the study: `panda_goal_reach` reproduces, while `halfcheetah_backflip` does not under the committed configuration. I did try (albeit a far smaller pool) a few hyperparameters (such as itereations, step size, and samples) but I did not see any improvement. 
 
 **Note** If trying to replicate the experiment on a single GPU workstation, note that the nonlinear task will fail since it has multiple GPU hard-coded, replace the GPU index 1 with 0 and it should work fine.  
+
+## Update — halfcheetah backflip reproduces once the MJX backend is used
+
+**Root cause: the committed cheetah run never used MJX.** The paper config (`configs/paper/nonlinear.yaml`) specifies `backend: mjx`, but `stl-svpio nonlinear --run` launches the runner with **no arguments** — the yaml is only read to print reference numbers. The runner then falls back to its argparse default, `--backend generalized` (Brax's own physics engine, not MuJoCo MJX).
+
+**Why the panda was unaffected.** `run_panda_goal_reach.py` differs in two ways: its default backend is already `mjx`, and it contains a guard that force-overrides `--mj-iterations` to 1 for reverse-mode differentiation (MJX's constraint solver uses `lax.while_loop` when `iterations > 1`, which `jax.grad` cannot differentiate). The cheetah runner is missing this guard, so fixing the backend alone crashes; both flags must be set by hand:
+
+```bash
+uv run python -m stl_svpio._paper_runners.run_halfcheetah_backflip --backend mjx --mj-iterations 1
+```
+
+![halfcheetah backflip, mjx backend](./docs/halfcheetah_backflip_mjx_fixed.gif)
