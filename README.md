@@ -159,3 +159,5 @@ uv run python -m stl_svpio._paper_runners.run_halfcheetah_backflip --backend mjx
 ```
 
 ![halfcheetah backflip, mjx backend](./docs/halfcheetah_backflip_mjx_fixed.gif)
+
+Note that though with the MJX backend the planner is able to find a control sequence that perfectly satisfies the control sequence it still looks a little weird, specifically, the cheetah never lands, it makes a giant leap and turns mid-air which allows it to satisfy the spec. 
