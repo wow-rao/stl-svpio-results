@@ -95,6 +95,32 @@ The following graph was constructed from the first run of the codebase without t
 
 ---
 
+## Update — Figure 3 reproduces once the scene seed is pinned
+
+The Figure 3 caption states that all non-MILP algorithms were evaluated across **100 different random sampling seeds**. The committed code does not do this. In `configs/paper/*_pointmass.yaml` the `scene_seed` key is declared as a *sibling* of `args` rather than inside it, and `_load_presets` in `scripts/reproduce_figure3.py` reads only `item["args"]`. So each of the 100 trials generates a completely different arena, different obstacle layout, zone placement and start state.
+
+### Why I assumed a fixed scene was intended
+
+1. **The MILP baseline already uses a fixed scene.** `configs/paper/milp_pytelo_pointmass.yaml` declares `seed: 0` *inside* the task dict, where it is read, and MILP is solved exactly once per task. Under the unpatched behaviour MILP is therefore evaluated on a single arena while the sampling methods are averaged over 100 different ones.
+2. **No arena other than seed 0 appeared to be feasible.** Across extensive TPE tuning on the long-horizon task, seed 0 was the only trial that ever produced a feasible trajectory; no hyper-parameter configuration recovered positive robustness on any other seed.
+3. **`scene_seed` exists in every preset but is dead code.** All four method configs carry `scene_seed: 0` for the long-horizon task and `scene_seed: 32` for the button task. A per-task hand-picked value is not something you write for a protocol meant to marginalise over arenas, and `PointMassTrialResult` records `seed` and `sampling_seed` as *separate* fields — the two axes were clearly intended to be independent.
+
+### Result
+
+![figure 3 with scene seed pinned](./docs/figure3_scene_seed_fixed.png)
+
+| task | satisfaction (unpatched) | satisfaction (scene pinned) | paper | mean rho (scene pinned) |
+|---|---|---|---|---|
+| single_visit_goals_long_horizon | 0.01 | **0.98** | 0.97 | +0.0220 |
+| multiagent_button | 0.47 | **1.00** | 1.00 | +0.1727 |
+| multiagent_sync_goals | 1.00 | **1.00** | 1.00 | +0.2393 |
+| multiagent_corridor_6_agents | 0.39 | **1.00** | 1.00 | +0.1454 |
+| **mean** | **0.47** | **1.00** | 0.99 | |
+
+**Caveat.** `scene_seed: 0` is the value committed in the YAML, but since the key was never read, nothing in the repository ever exercised it, and I cannot confirm it is the arena the authors actually plotted. The agreement with the reported numbers is strong evidence that it is. MILP is not included in the figure above; it times out on the long-horizon task, as reported in the paper.
+
+---
+
 ## Nonlinear MJX tasks — panda reach & halfcheetah backflip
 
 Unlike Table I / Figure 3, these are single deterministic long-horizon GPU runs (no seed distribution), so each is compared as one robustness scalar plus the satisfied boolean against the committed reference (`results/reference/*_results.json`). Runtime is hardware-dependent and shown for information only.
